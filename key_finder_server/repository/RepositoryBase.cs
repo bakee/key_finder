@@ -7,7 +7,7 @@ public class RepositoryBase<T> : IRepositoryBase<T>
     protected readonly AppDbContext _context;
     public RepositoryBase(AppDbContext context)
     {
-        this._context = context;
+        _context = context;
     }
 
     public async Task Delete(T entity)
@@ -26,9 +26,11 @@ public class RepositoryBase<T> : IRepositoryBase<T>
         throw new NotImplementedException();
     }
 
-    public Task<T> Insert(T entity)
+    public async Task<T> Insert(T entity)
     {
-        throw new NotImplementedException();
+        await _context.AddAsync(entity);
+        await _context.SaveChangesAsync();
+        return entity;
     }
 
     public Task<T> Update(T entity)

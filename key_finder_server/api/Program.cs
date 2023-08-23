@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using KeyFinder.Repository;
+using KeyFinder.Core.Service;
+using KeyFinder.Service;
+using KeyFinder.Core.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlite("Data Source=sqlite.db;Mode=ReadWrite;");
 });
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
@@ -30,5 +36,7 @@ app.UseAuthorization();
 app.UseCors();
 
 app.MapControllers();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();

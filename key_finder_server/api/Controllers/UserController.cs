@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using KeyFinder.Core.Dto;
+using KeyFinder.Core.Service;
 
 namespace KeyFinder.Api.Controller;
 
@@ -8,11 +9,19 @@ namespace KeyFinder.Api.Controller;
 [Route("/api/[controller]")]
 public class UserController : ControllerBase
 {
-    [HttpPost]
-    public ActionResult CreateUser(UserDto user)
+    private readonly IUserService _userService;
+    public UserController(IUserService userService)
     {
-        return Ok(user);
+        _userService = userService;
     }
+
+    [HttpPost]
+    public async Task<ActionResult> CreateUser(UserDto user)
+    {
+        var newUser = await _userService.CreateUserAsync(user);
+        return Ok(newUser);
+    }
+
     [HttpPost("login")]
     public ActionResult Login(UserDto user)
     {

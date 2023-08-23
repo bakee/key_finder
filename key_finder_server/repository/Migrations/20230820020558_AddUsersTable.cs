@@ -27,6 +27,7 @@ namespace KeyFinder.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.UniqueConstraint("Unique_Email", x=>x.Email);
                 });
         }
 

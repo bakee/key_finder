@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 
+using KeyFinder.Core.Dto;
+
+namespace KeyFinder.Api.Controller;
+
 [ApiController]
 [Route("/api/[controller]")]
 public class UserController : ControllerBase

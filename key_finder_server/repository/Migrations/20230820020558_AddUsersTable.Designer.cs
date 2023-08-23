@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace key_finder_server.Migrations
+namespace KeyFinder.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20230820020558_AddUsersTable")]

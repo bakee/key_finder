@@ -1,6 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 
-public class AppDbContext : DbContext {
+using KeyFinder.Core.Entity;
+
+namespace KeyFinder.Repository;
+
+public class AppDbContext : DbContext
+{
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace key_finder_server.Migrations
+namespace KeyFinder.Repository.Migrations
 {
     /// <inheritdoc />
     public partial class AddUsersTable : Migration

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using KeyFinder.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

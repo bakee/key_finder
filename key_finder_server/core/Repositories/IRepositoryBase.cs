@@ -1,3 +1,5 @@
+namespace KeyFinder.Core.Repository;
+
 public interface IRepositoryBase<T>
 {
     public Task<IEnumerable<T>> GetAll();

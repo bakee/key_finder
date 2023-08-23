@@ -1,7 +1,12 @@
+using KeyFinder.Core.Repository;
+
+namespace KeyFinder.Repository;
+
 public class RepositoryBase<T> : IRepositoryBase<T>
 {
     protected readonly AppDbContext _context;
-    public RepositoryBase(AppDbContext context) {
+    public RepositoryBase(AppDbContext context)
+    {
         this._context = context;
     }
 

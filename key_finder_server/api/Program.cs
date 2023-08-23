@@ -3,6 +3,7 @@ using KeyFinder.Repository;
 using KeyFinder.Core.Service;
 using KeyFinder.Service;
 using KeyFinder.Core.Repository;
+using KeyFinder.Api.ExceptionHandling;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -4,6 +4,11 @@
 dotnet ef database update
 ```
 
+If the ```dotnet ef``` command is not found then
+```sh
+dotnet tool install --global dotnet-ef
+```
+
 ## Run the server
 
 ```sh

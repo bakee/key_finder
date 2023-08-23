@@ -29,10 +29,11 @@ public class UserController : ControllerBase
         {
             return Unauthorized("Invalid credential provided.");
         }
+        var token = _userService.GenerateToken(user);
         return Ok(new
         {
             user = user,
-            token = "jjj.www.ttt"
+            token = token
         });
     }
 }

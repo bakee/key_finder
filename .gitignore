@@ -104,3 +104,6 @@ yarn.lock
 .env
 npm-debug.log
 
+# sqlite-db
+*.db
+

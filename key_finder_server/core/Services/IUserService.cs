@@ -4,5 +4,6 @@ namespace KeyFinder.Core.Service;
 
 public interface IUserService
 {
-    public Task<UserDto> CreateUserAsync(UserDto user);
+    Task<UserDto> CreateUserAsync(UserDto user);
+    Task<UserDto> Login(UserDto dto);
 }

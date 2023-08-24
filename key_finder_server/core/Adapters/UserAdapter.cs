@@ -9,6 +9,7 @@ public static class UserAdapter
     {
         return new User
         {
+            Id = dto.Id,
             Name = dto.Name,
             Email = dto.Email,
             Password = dto.Password
@@ -19,6 +20,7 @@ public static class UserAdapter
     {
         return new UserDto
         {
+            Id = user.Id,
             Name = user.Name,
             Email = user.Email
         };

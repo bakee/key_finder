@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace KeyFinder.Repository;
 
 using System.Threading.Tasks;
@@ -10,5 +12,17 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
     public UserRepository(AppDbContext context) : base(context)
     {
         _context = context;
+    }
+
+    public async Task<User?> GetByEmail(string email)
+    {
+        return await All()
+            .Where(u => u.Email == email)
+            .FirstOrDefaultAsync();
+    }
+
+    protected override IQueryable<User> All()
+    {
+        return _context.Users.AsQueryable();
     }
 }

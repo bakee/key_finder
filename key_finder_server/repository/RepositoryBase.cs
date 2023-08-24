@@ -1,8 +1,10 @@
+using KeyFinder.Core.Entity;
 using KeyFinder.Core.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace KeyFinder.Repository;
 
-public class RepositoryBase<T> : IRepositoryBase<T>
+public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : EntityBase
 {
     protected readonly AppDbContext _context;
     public RepositoryBase(AppDbContext context)
@@ -15,15 +17,18 @@ public class RepositoryBase<T> : IRepositoryBase<T>
         //_context.Remove(entity);
     }
 
+    protected abstract IQueryable<T> All();
+
     public async Task<IEnumerable<T>> GetAll()
     {
-        //_context.FindAsync()
-        return null;
+        return  await All().ToListAsync();
     }
 
-    public Task<T> GetById(long id)
+    public async Task<T> GetById(long id)
     {
-        throw new NotImplementedException();
+        return await All()
+            .Where(e => e.Id == id)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<T> Insert(T entity)

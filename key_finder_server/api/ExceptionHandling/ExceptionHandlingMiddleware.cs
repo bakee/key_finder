@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using core.Exceptions;
 
 namespace KeyFinder.Api.ExceptionHandling;
 
@@ -30,7 +31,12 @@ public class ExceptionHandlingMiddleware
     private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         context.Response.ContentType = "application/json";
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        var statusCode = HttpStatusCode.InternalServerError;
+        if (exception is HttpException httpException)
+        {
+            statusCode = httpException.StatusCode;
+        }
+        context.Response.StatusCode = (int)statusCode;
         var errorResponse = new ErrorResposne(exception.Message);
         var jsonResponse = JsonSerializer.Serialize(errorResponse);
         await context.Response.WriteAsync(jsonResponse);

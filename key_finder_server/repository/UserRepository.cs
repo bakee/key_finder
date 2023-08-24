@@ -20,9 +20,4 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
             .Where(u => u.Email == email)
             .FirstOrDefaultAsync();
     }
-
-    protected override IQueryable<User> All()
-    {
-        return _context.Users.AsQueryable();
-    }
 }

@@ -6,25 +6,32 @@ namespace KeyFinder.Repository;
 
 public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : EntityBase
 {
-    protected readonly AppDbContext _context;
-    public RepositoryBase(AppDbContext context)
+    private readonly AppDbContext _context;
+    private readonly DbSet<T> _set;
+
+    protected RepositoryBase(AppDbContext context)
     {
         _context = context;
+        _set = _context.Set<T>();
     }
 
     public async Task Delete(T entity)
     {
-        //_context.Remove(entity);
+        _set.Remove(entity);
+        await Save();
     }
 
-    protected abstract IQueryable<T> All();
+    protected IQueryable<T> All()
+    {
+        return _set.AsQueryable();
+    }
 
     public async Task<IEnumerable<T>> GetAll()
     {
         return  await All().ToListAsync();
     }
 
-    public async Task<T> GetById(long id)
+    public async Task<T?> GetById(long id)
     {
         return await All()
             .Where(e => e.Id == id)
@@ -33,13 +40,20 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : EntityBas
 
     public async Task<T> Insert(T entity)
     {
-        await _context.AddAsync(entity);
-        await _context.SaveChangesAsync();
+        await _set.AddAsync(entity);
+        await Save();
         return entity;
     }
 
-    public Task<T> Update(T entity)
+    private async Task Save()
     {
-        throw new NotImplementedException();
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<T> Update(T entity)
+    {
+        _context.Entry(entity).State = EntityState.Modified;
+        await Save();
+        return entity;
     }
 }

@@ -3,6 +3,7 @@ using KeyFinder.Core.Service;
 using KeyFinder.Core.Repository;
 using KeyFinder.Core.Dto;
 using KeyFinder.Core.Adapters;
+using KeyFinder.Core.Entity;
 
 namespace KeyFinder.Service;
 

@@ -11,11 +11,19 @@ public class CarService : ICarService
 {
     private readonly ICarRepository _carRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IKeyRepository _keyRepository;
+    private readonly IShareHolderRepository _shareHolderRepository;
 
-    public CarService(ICarRepository carRepository, IUserRepository userRepository)
+    public CarService(
+        ICarRepository carRepository,
+        IUserRepository userRepository,
+        IKeyRepository keyRepository,
+        IShareHolderRepository shareHolderRepository)
     {
         _carRepository = carRepository;
         _userRepository = userRepository;
+        _keyRepository = keyRepository;
+        _shareHolderRepository = shareHolderRepository;
     }
 
     public async Task<CarDto> CreateCar(CarDto carDto, long userId)
@@ -29,7 +37,30 @@ public class CarService : ICarService
 
         car.Owner = user;
         var savedCar = await _carRepository.Insert(car);
+        await CreateMainKey(savedCar, user);
+        await CreateShareHolder(savedCar, user);
         return CarAdapter.ToCarDto(savedCar);
+    }
+
+    private async Task CreateMainKey(Car savedCar, User user)
+    {
+        var carKey = new Key
+        {
+            Name = "Main",
+            Car = savedCar,
+            Member = user
+        };
+        await _keyRepository.Insert(carKey);
+    }
+
+    private async Task CreateShareHolder(Car savedCar, User user)
+    {
+        var shareHolder = new ShareHolder
+        {
+            Car = savedCar,
+            Member = user
+        };
+        await _shareHolderRepository.Insert(shareHolder);
     }
 
     public Task<Car> ChangeLicensePlate(long carId, string newPlate)
@@ -42,9 +73,37 @@ public class CarService : ICarService
         throw new NotImplementedException();
     }
 
-    public Task<bool> AddShareHolder(long carId, long userId, long newMemberId)
+    public async Task AddShareHolder(long carId, long userId, long newMemberId)
     {
-        throw new NotImplementedException();
+        var car = await _carRepository.GetById(carId);
+        if (car == null)
+        {
+            throw new NotFoundException("Car does not exist");
+        }
+
+        if (car.Owner.Id != userId)
+        {
+            throw new InsufficientPermissionException("You must be the owner to perform this operation");
+        }
+
+        var member = await _userRepository.GetById(newMemberId);
+        if (member == null)
+        {
+            throw new NotFoundException("Member does not exist");
+        }
+
+        var existingEntry = await _shareHolderRepository.GetExistingEntry(car, member);
+        if (existingEntry != null)
+        {
+            throw new AlreadyExistException("Already a share holder");
+        }
+
+        var shareHolder = new ShareHolder
+        {
+            Car = car,
+            Member = member
+        };
+        await _shareHolderRepository.Insert(shareHolder);
     }
 
     public Task<bool> RemoveShareHolder(long carId, long userId, long oldMemberId)

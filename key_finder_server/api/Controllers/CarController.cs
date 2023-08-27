@@ -1,6 +1,7 @@
 using KeyFinder.Core.Dto;
 using KeyFinder.Core.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KeyFinder.Api.Controller;
@@ -29,5 +30,14 @@ public class CarController : ControllerBase
         var userId = GetUserId();
         var car = await _carService.CreateCar(dto, userId);
         return Ok(car);
+    }
+
+    [HttpPost]
+    //[Authorize]
+    public async Task<ActionResult> AddShareHolder(ShareHolderDto shareHolderDto)
+    {
+        var userId = GetUserId();
+        await _carService.AddShareHolder(shareHolderDto.CarId, userId, shareHolderDto.MemberId);
+        return Ok();
     }
 }

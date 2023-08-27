@@ -16,5 +16,8 @@ public static class DependencyInjection
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<ICarService, CarService>();
         services.AddScoped<ICarRepository, CarRepository>();
+        services.AddScoped<IKeyRepository, KeyRepository>();
+        services.AddScoped<IKeyLocationRepository, KeyLocationRepository>();
+        services.AddScoped<IShareHolderRepository, ShareHolderRepository>();
     }
 }

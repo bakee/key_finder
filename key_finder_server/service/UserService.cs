@@ -29,7 +29,7 @@ public class UserService : IUserService
         }
         catch (Exception e)
         {
-            throw new UserAlreadyExistException("User with same email address already exists!");
+            throw new AlreadyExistException("User with same email address already exists!");
         }
     }
 

@@ -4,4 +4,5 @@ public class Key : EntityBase
 {
     public string Name { get; set; }
     public Car Car { get; set; }
+    public User Member { get; set; }
 }

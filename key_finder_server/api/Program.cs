@@ -18,6 +18,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 DependencyInjection.ConfigureDependency(builder.Services);
 
+builder.Services.AddAuthentication()
+    .AddJwtBearer(options =>
+    {
+        //options.Audience = "https://localhost";
+        //options.Authority = "https://localhost";
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

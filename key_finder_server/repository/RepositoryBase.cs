@@ -31,7 +31,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : EntityBas
         return  await All().ToListAsync();
     }
 
-    public async Task<T?> GetById(long id)
+    public virtual async Task<T?> GetById(long id)
     {
         return await All()
             .Where(e => e.Id == id)

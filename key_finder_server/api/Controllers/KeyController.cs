@@ -11,7 +11,12 @@ public class KeyController : BaseController
 {
     private readonly IKeyService _keyService;
 
-    [HttpPost("claim")]
+    public KeyController(IKeyService keyService)
+    {
+        _keyService = keyService;
+    }
+
+    [HttpPut("claim")]
     public async Task<ActionResult> ClaimKey(KeyDto keyDto)
     {
         var userId = GetUserId();
@@ -19,7 +24,7 @@ public class KeyController : BaseController
         return Ok();
     }
     
-    [HttpPost("transfer")]
+    [HttpPut("transfer")]
     public async Task<ActionResult> TransferKey(KeyDto keyDto)
     {
         var userId = GetUserId();

@@ -16,4 +16,13 @@ public class KeyRepository : RepositoryBase<Key>, IKeyRepository
             .Where(k => k.Car.Id == carId)
             .ToListAsync();
     }
+    
+    public override async Task<Key?> GetById(long id)
+    {
+        return await All()
+            .Where(e => e.Id == id)
+            .Include(k=>k.Member)
+            .Include(k=>k.Car)
+            .FirstOrDefaultAsync();
+    }
 }

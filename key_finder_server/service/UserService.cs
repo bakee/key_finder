@@ -52,6 +52,25 @@ public class UserService : IUserService
         return responseDto;
     }
 
+    public async Task<List<UserDto>> FindUsers(string? name, string? email)
+    {
+        if (!string.IsNullOrWhiteSpace(name))
+        {
+            var username = name.Trim();
+            var users = await _userRepository.FindByName(username);
+            return users.Select(UserAdapter.ToDto).ToList();
+        }
+        else if(!string.IsNullOrWhiteSpace(email))
+        {
+            var emailAddress = email.Trim();
+            var users = await _userRepository.FindByEmail(emailAddress);
+            return users.Select(UserAdapter.ToDto).ToList();
+        }
+
+        var allUsers = await _userRepository.GetAll();
+        return allUsers.Select(UserAdapter.ToDto).ToList();
+    }
+
     private string HashPassword(string password)
     {
         var salt = BCrypt.Net.BCrypt.GenerateSalt();

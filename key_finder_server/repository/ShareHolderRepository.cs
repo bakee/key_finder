@@ -10,10 +10,26 @@ public class ShareHolderRepository : RepositoryBase<ShareHolder>, IShareHolderRe
     {
     }
 
-    public async Task<ShareHolder?> GetExistingEntry(Car car, User member)
+    public async Task<ShareHolder?> GetExistingEntry(long carId, long memberId)
     {
         return await All()
-            .Where(sh => sh.Car == car && sh.Member == member)
+            .Where(sh => sh.Car.Id == carId && sh.Member.Id == memberId)
             .FirstOrDefaultAsync();
+    }
+
+    public async Task<List<Car>> GetAllCarsForMember(long userId)
+    {
+        return await All()
+            .Where(sh => sh.Member.Id == userId)
+            .Select(sh => sh.Car)
+            .ToListAsync();
+    }
+
+    public async Task<List<User>> GetAllMembersForCar(long carId)
+    {
+        return await All()
+            .Where(sh => sh.Car.Id == carId)
+            .Select(sh => sh.Member)
+            .ToListAsync();
     }
 }

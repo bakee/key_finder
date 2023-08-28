@@ -18,4 +18,18 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
             .Where(u => u.Email == email)
             .FirstOrDefaultAsync();
     }
+
+    public async Task<List<User>> FindByName(string username)
+    {
+        return await All()
+            .Where(u => u.Name.Contains(username))
+            .ToListAsync();
+    }
+
+    public async Task<List<User>> FindByEmail(string email)
+    {
+        return await All()
+            .Where(u => u.Email.Contains(email))
+            .ToListAsync();
+    }
 }

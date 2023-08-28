@@ -6,7 +6,7 @@ using KeyFinder.Core.Service;
 namespace KeyFinder.Api.Controller;
 
 [ApiController]
-[Route("/api/[controller]")]
+[Route("api")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -15,7 +15,17 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    [HttpPost]
+    [HttpGet("users")]
+    public async Task<ActionResult> SearchUsers(
+        [FromQuery] string? name,
+        [FromQuery] string? email)
+    {
+        var users = await _userService.FindUsers(name, email);
+        return Ok(users);
+        
+    }
+
+    [HttpPost("register")]
     public async Task<ActionResult> CreateUser(UserDto user)
     {
         var newUser = await _userService.CreateUserAsync(user);

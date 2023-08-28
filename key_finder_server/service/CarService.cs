@@ -42,6 +42,46 @@ public class CarService : ICarService
         return CarAdapter.ToCarDto(savedCar);
     }
 
+    public async Task<List<CarDto>> GetCarSummary(long userId)
+    {
+        var cars = await _shareHolderRepository.GetAllCarsForMember(userId);
+        return cars.Select(CarAdapter.ToCarDto).ToList();
+    }
+
+    public async Task<CarDetailDto> GetCarDetail(long carId, long userId)
+    {
+        var car = await _carRepository.GetById(carId);
+        if (car == null)
+        {
+            throw new NotFoundException("Car not found!");
+        }
+
+        var existingEntry = await _shareHolderRepository.GetExistingEntry(carId, userId);
+        if (existingEntry == null)
+        {
+            throw new InsufficientPermissionException("User does not have access to the car");
+        }
+
+        var allMembers = await _shareHolderRepository.GetAllMembersForCar(carId);
+        var allKeys = await _keyRepository.GetKeysByCar(carId);
+
+        var members = allMembers
+            .Select(member => new MemberDto
+            {
+                Member = UserAdapter.ToDto(member),
+                Keys = allKeys
+                    .Where(k => k.Member.Id == member.Id)
+                    .Select(KeyAdapter.ToKeyDto)
+                    .ToList()
+            }).ToList();
+
+        return new CarDetailDto
+        {
+            Car = CarAdapter.ToCarDto(car),
+            Members = members
+        };
+    }
+
     private async Task CreateMainKey(Car savedCar, User user)
     {
         var carKey = new Key
@@ -73,55 +113,7 @@ public class CarService : ICarService
         throw new NotImplementedException();
     }
 
-    public async Task AddShareHolder(long carId, long userId, long newMemberId)
-    {
-        var car = await _carRepository.GetById(carId);
-        if (car == null)
-        {
-            throw new NotFoundException("Car does not exist");
-        }
-
-        if (car.Owner.Id != userId)
-        {
-            throw new InsufficientPermissionException("You must be the owner to perform this operation");
-        }
-
-        var member = await _userRepository.GetById(newMemberId);
-        if (member == null)
-        {
-            throw new NotFoundException("Member does not exist");
-        }
-
-        var existingEntry = await _shareHolderRepository.GetExistingEntry(car, member);
-        if (existingEntry != null)
-        {
-            throw new AlreadyExistException("Already a share holder");
-        }
-
-        var shareHolder = new ShareHolder
-        {
-            Car = car,
-            Member = member
-        };
-        await _shareHolderRepository.Insert(shareHolder);
-    }
-
-    public Task<bool> RemoveShareHolder(long carId, long userId, long oldMemberId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> ClaimKey(long keyId, long userId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> TransferKey(long keyId, long userId, long newKeyHolderId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<CarDto> GetCarSummary(long carId, long userId)
+    public Task<CarDto> UpdateCar(long carId, long userId, CarDto dto)
     {
         throw new NotImplementedException();
     }

@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace KeyFinder.Api.Controller;
 
 [ApiController]
-[Route("/api/[controller]")]
-public class CarController : ControllerBase
+[Route("api/cars")]
+//[Authorize]
+public class CarController : BaseController
 {
     private readonly ICarService _carService;
     
@@ -17,14 +18,23 @@ public class CarController : ControllerBase
         _carService = carService;
     }
 
-    private long GetUserId()
+    [HttpGet]
+    public async Task<ActionResult> GetSummary()
     {
-        var userIdString = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
-        return !string.IsNullOrEmpty(userIdString) ? long.Parse(userIdString) : 1;
+        var userId = GetUserId();
+        var carSummary = await _carService.GetCarSummary(userId);
+        return Ok(carSummary);
+    }
+    
+    [HttpGet("{carId:long}")]
+    public async Task<ActionResult> GetDetail(long carId)
+    {
+        var userId = GetUserId();
+        var carDetail = await _carService.GetCarDetail(carId, userId);
+        return Ok(carDetail);
     }
     
     [HttpPost]
-    //[Authorize]
     public async Task<ActionResult> CreateCar(CarDto dto)
     {
         var userId = GetUserId();
@@ -32,12 +42,11 @@ public class CarController : ControllerBase
         return Ok(car);
     }
 
-    [HttpPost]
-    //[Authorize]
-    public async Task<ActionResult> AddShareHolder(ShareHolderDto shareHolderDto)
+    [HttpPut("{carId:long}")]
+    public async Task<ActionResult> UpdateCar(long carId, [FromBody] CarDto dto)
     {
         var userId = GetUserId();
-        await _carService.AddShareHolder(shareHolderDto.CarId, userId, shareHolderDto.MemberId);
-        return Ok();
+        var updatedCar = await _carService.UpdateCar(carId, userId, dto);
+        return Ok(updatedCar);
     }
 }

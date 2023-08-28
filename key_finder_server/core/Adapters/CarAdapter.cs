@@ -9,6 +9,7 @@ public static class CarAdapter
     {
         return new Car
         {
+            Id = carDto.Id,
             Make = carDto.Make,
             Model = carDto.Model,
             Year = carDto.Year,
@@ -20,6 +21,7 @@ public static class CarAdapter
     {
         return new CarDto
         {
+            Id = car.Id,
             Make = car.Make,
             Model = car.Model,
             Year = car.Year,

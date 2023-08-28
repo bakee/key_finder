@@ -11,13 +11,25 @@ public static class DependencyInjection
 {
     public static void ConfigureDependency(IServiceCollection services)
     {
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IJwtService, JwtService>();
+        ConfigureServiceDependencies(services);
+        ConfigureRepositoryDependencies(services);
+    }
+
+    private static void ConfigureServiceDependencies(IServiceCollection services)
+    {
         services.AddScoped<ICarService, CarService>();
+        services.AddScoped<IJwtService, JwtService>();
+        services.AddScoped<IKeyService, KeyService>();
+        services.AddScoped<IShareHolderService, ShareHolderService>();
+        services.AddScoped<IUserService, UserService>();
+    }
+
+    private static void ConfigureRepositoryDependencies(IServiceCollection services)
+    {
         services.AddScoped<ICarRepository, CarRepository>();
-        services.AddScoped<IKeyRepository, KeyRepository>();
         services.AddScoped<IKeyLocationRepository, KeyLocationRepository>();
+        services.AddScoped<IKeyRepository, KeyRepository>();
         services.AddScoped<IShareHolderRepository, ShareHolderRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
     }
 }

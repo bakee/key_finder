@@ -1,7 +1,10 @@
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using KeyFinder.Repository;
 using KeyFinder.Api.ExceptionHandling;
 using KeyFinder.Api;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +24,16 @@ DependencyInjection.ConfigureDependency(builder.Services);
 builder.Services.AddAuthentication()
     .AddJwtBearer(options =>
     {
-        //options.Audience = "https://localhost";
-        //options.Authority = "https://localhost";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"], // Replace with your issuer
+            ValidAudience = builder.Configuration["JwtSettings:Audience"], // Replace with your audience
+            IssuerSigningKey =
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"])) // Replace with your secret key
+        };
     });
 
 var app = builder.Build();

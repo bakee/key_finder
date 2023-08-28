@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using KeyFinder.Core.Dto;
 using KeyFinder.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KeyFinder.Api.Controller;
 
@@ -16,6 +17,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("users")]
+    [Authorize]
     public async Task<ActionResult> SearchUsers(
         [FromQuery] string? name,
         [FromQuery] string? email)

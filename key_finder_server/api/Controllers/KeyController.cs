@@ -1,12 +1,13 @@
 using KeyFinder.Core.Dto;
 using KeyFinder.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KeyFinder.Api.Controller;
 
 [ApiController]
 [Route("api/keys")]
-//[Authorize]
+[Authorize]
 public class KeyController : BaseController
 {
     private readonly IKeyService _keyService;

@@ -8,7 +8,7 @@ namespace KeyFinder.Api.Controller;
 
 [ApiController]
 [Route("api/cars")]
-//[Authorize]
+[Authorize]
 public class CarController : BaseController
 {
     private readonly ICarService _carService;

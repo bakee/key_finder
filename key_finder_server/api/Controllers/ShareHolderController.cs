@@ -1,12 +1,13 @@
 using KeyFinder.Core.Dto;
 using KeyFinder.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KeyFinder.Api.Controller;
 
 [ApiController]
 [Route("api/shareholders")]
-//[Authorize]
+[Authorize]
 public class ShareHolderController : BaseController
 {
     private readonly IShareHolderService _shareHolderService;

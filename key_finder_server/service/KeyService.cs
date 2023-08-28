@@ -77,6 +77,7 @@ public class KeyService : IKeyService
 
         var keyLocation = new KeyLocation
         {
+            Key = key,
             HandoverType = KeyHandoverType.Claim,
             PreviousMember = previousMember,
             Member = member

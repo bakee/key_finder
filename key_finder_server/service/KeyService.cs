@@ -24,22 +24,51 @@ public class KeyService : IKeyService
 
     public async Task ClaimKey(long keyId, long userId)
     {
-        var key = await _keyRepository.GetById(keyId);
-        if (key == null)
-        {
-            throw new NotFoundException("Key not found");
-        }
+        var key = await GetKey(keyId);
 
         if (key.Member.Id == userId)
         {
             return;
         }
 
+        await TransferKey(key, userId);
+    }
+
+    public async Task TransferKey(long keyId, long userId, long newKeyHolderId)
+    {
+        var key = await GetKey(keyId);
+        
+        if (key.Member.Id != userId)
+        {
+            throw new InsufficientPermissionException("You do not have the key to transfer");
+        }
+
+        if (key.Member.Id == newKeyHolderId)
+        {
+            return;
+        }
+
+        await TransferKey(key, newKeyHolderId);
+    }
+    
+    private async Task<Key> GetKey(long keyId)
+    {
+        var key = await _keyRepository.GetById(keyId);
+        if (key == null)
+        {
+            throw new NotFoundException("Key not found");
+        }
+
+        return key;
+    }
+
+    private async Task TransferKey(Key key, long newKeyHolderId)
+    {
         var members = await _shareHolderRepository.GetAllMembersForCar(key.Car.Id);
-        var member = members.FirstOrDefault(m => m.Id == userId);
+        var member = members.FirstOrDefault(m => m.Id == newKeyHolderId);
         if (member == null)
         {
-            throw new InsufficientPermissionException("Use is not a shareholder of the car");
+            throw new InsufficientPermissionException("Member is not a shareholder of the car");
         }
 
         var previousMember = key.Member;
@@ -53,10 +82,5 @@ public class KeyService : IKeyService
             Member = member
         };
         await _keyLocationRepository.Insert(keyLocation);
-    }
-
-    public Task<bool> TransferKey(long keyId, long userId, long newKeyHolderId)
-    {
-        throw new NotImplementedException();
     }
 }

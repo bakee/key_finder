@@ -18,6 +18,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlite("Data Source=sqlite.db;Mode=ReadWrite;");
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 DependencyInjection.ConfigureDependency(builder.Services);
 
@@ -49,7 +59,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseCors();
+app.UseCors("AllowAnyOrigin");
 
 app.MapControllers();
 

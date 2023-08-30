@@ -17,7 +17,7 @@ const CarDetail: FC<CarDetailProps> = () => {
       setCarDetail(data);
     };
     getCarDetails();
-  });
+  }, []);
 
   return (
     <div className="container">

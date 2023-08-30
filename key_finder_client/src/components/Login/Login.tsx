@@ -1,19 +1,20 @@
-import React, { FC, useState } from 'react';
-import { login } from '../../api/user';
+import React, { FC, useState } from "react";
+import { login } from "../../api/user";
+import { setToken } from "../../utils/storage";
 
-interface LoginProps { }
+interface LoginProps {}
 
 const Login: FC<LoginProps> = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleRegistration = async () => {
-    // Here you can implement your registration logic
-    console.log('Login data:', { email, password });
+    console.log("Login data:", { email, password });
     try {
       let response = await login(email, password);
       console.log(response);
       alert("Login successful. Token: " + response.token);
+      setToken(response.token!);
     } catch (error: any) {
       console.log(error);
       alert("Login failed! " + error.message);
@@ -38,7 +39,6 @@ const Login: FC<LoginProps> = () => {
       <button onClick={handleRegistration}>Login</button>
     </div>
   );
-}
-
+};
 
 export default Login;

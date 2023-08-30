@@ -12,11 +12,6 @@ code {
     monospace;
 }
 
-.car {
-  border: 2px solid #883333;
-  margin-bottom: 10px;
-}
-
 /* RegistrationPage.css */
 .registration-container {
   display: flex;

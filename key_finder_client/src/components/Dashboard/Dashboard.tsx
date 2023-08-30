@@ -14,7 +14,7 @@ const Dashboard: FC<DashboardProps> = () => {
     };
 
     getCar();
-  }, []);
+  },[]);
 
   return (
     <>

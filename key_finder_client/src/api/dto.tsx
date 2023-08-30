@@ -13,3 +13,19 @@ export interface CarDto {
   year: number;
   licensePlate: string;
 }
+
+export interface KeyDto {
+  name: string;
+  keyId: number;
+  memberId: number;
+}
+
+export interface MemberDto {
+  member: UserDto;
+  keys: KeyDto[];
+}
+
+export interface CarDetailDto {
+  car: CarDto;
+  members: MemberDto[];
+}

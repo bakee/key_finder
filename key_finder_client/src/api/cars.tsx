@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { makeUrl } from "./common";
 import { getToken } from "../utils/storage";
-import { CarDto } from "./dto";
+import { CarDetailDto, CarDto } from "./dto";
 
 export const getCars = async (): Promise<CarDto[]> => {
   const apiPath = makeUrl("/cars");
@@ -19,6 +19,24 @@ export const getCars = async (): Promise<CarDto[]> => {
     console.log(error);
   }
   return [];
+};
+
+export const getCarDetail = async (carId: number): Promise<CarDetailDto> => {
+  const apiPath = makeUrl("/cars/" + carId);
+  try {
+    const token = getToken();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    let response = await axios.get(apiPath, config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 export const createCar = async (

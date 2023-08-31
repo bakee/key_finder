@@ -11,6 +11,7 @@
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "axios": "^1.5.0",
+    "bootstrap": "^5.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
@@ -20,6 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "debug": "react-scripts start --inspect-brk=0.0.0.0:9229 --runInBand --no-cache",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

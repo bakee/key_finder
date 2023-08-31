@@ -20,7 +20,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start --inspect-brk=0.0.0.0:9229 --runInBand --no-cache",
+    "start": "react-scripts start",
+    "debug": "react-scripts start --inspect-brk=0.0.0.0:9229 --runInBand --no-cache",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

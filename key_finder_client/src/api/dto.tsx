@@ -30,3 +30,8 @@ export interface CarDetailDto {
   members: MemberDto[];
   keys: KeyDto[];
 }
+
+export interface ShareHolderDto {
+  carId: number;
+  memberId: number;
+}

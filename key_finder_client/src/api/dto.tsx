@@ -28,4 +28,5 @@ export interface MemberDto {
 export interface CarDetailDto {
   car: CarDto;
   members: MemberDto[];
+  keys: KeyDto[];
 }

@@ -28,7 +28,7 @@ const Dashboard: FC<DashboardProps> = () => {
     <>
       <h1>Cars</h1>
       {cars.map((car) => (
-        <Car key={car.id} car={car} />
+        <Car key={car.id} car={car} showDetails={true} />
       ))}
     </>
   );

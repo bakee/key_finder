@@ -4,6 +4,7 @@ import Key from "../Key/Key";
 
 interface MemberProps {
   member: MemberDto;
+  reload: () => void;
 }
 
 const Member: FC<MemberProps> = (data) => {
@@ -22,7 +23,9 @@ const Member: FC<MemberProps> = (data) => {
         {hasAKey && (
           <div className="mt-3">
             <h5>Keys</h5>
-            {keys.map((k) =>  <Key data={k} /> )}
+            {keys.map((k) => (
+              <Key data={k} reload={data.reload}/>
+            ))}
           </div>
         )}
       </div>

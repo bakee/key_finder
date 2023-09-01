@@ -67,7 +67,10 @@ const CarDetail: FC<CarDetailProps> = () => {
           Add Member
         </button>
       </div>
-      {carDetail && carDetail.members.map((m) => <Member member={m} />)}
+      {carDetail &&
+        carDetail.members.map((m) => (
+          <Member member={m} reload={getCarDetails} />
+        ))}
     </>
   );
 };

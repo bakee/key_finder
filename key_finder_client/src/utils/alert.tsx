@@ -1,3 +1,5 @@
 export const showAlert = (message: string) => {
-  alert(message);
+  setTimeout(() => {
+    alert(message);
+  }, 50);
 };

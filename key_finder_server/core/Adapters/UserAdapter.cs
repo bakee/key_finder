@@ -16,8 +16,9 @@ public static class UserAdapter
         };
     }
 
-    public static UserDto ToDto(User user)
+    public static UserDto? ToDto(User user)
     {
+        if (user == null) return null;
         return new UserDto
         {
             Id = user.Id,

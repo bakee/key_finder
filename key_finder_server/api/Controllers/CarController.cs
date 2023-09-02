@@ -12,7 +12,7 @@ namespace KeyFinder.Api.Controller;
 public class CarController : BaseController
 {
     private readonly ICarService _carService;
-    
+
     public CarController(ICarService carService)
     {
         _carService = carService;
@@ -25,7 +25,7 @@ public class CarController : BaseController
         var carSummary = await _carService.GetCarSummary(userId);
         return Ok(carSummary);
     }
-    
+
     [HttpGet("{carId:long}")]
     public async Task<ActionResult> GetDetail(long carId)
     {
@@ -33,7 +33,7 @@ public class CarController : BaseController
         var carDetail = await _carService.GetCarDetail(carId, userId);
         return Ok(carDetail);
     }
-    
+
     [HttpPost]
     public async Task<ActionResult> CreateCar(CarDto dto)
     {
@@ -48,5 +48,13 @@ public class CarController : BaseController
         var userId = GetUserId();
         var updatedCar = await _carService.UpdateCar(carId, userId, dto);
         return Ok(updatedCar);
+    }
+
+    [HttpGet("{carId:long}/history")]
+    public async Task<ActionResult> GetKeyTransferHistory(long carId)
+    {
+        var userId = GetUserId();
+        var carDetail = await _carService.GetKeyTransferHistory(carId, userId);
+        return Ok(carDetail);
     }
 }

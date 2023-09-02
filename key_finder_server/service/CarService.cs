@@ -13,17 +13,20 @@ public class CarService : ICarService
     private readonly IUserRepository _userRepository;
     private readonly IKeyRepository _keyRepository;
     private readonly IShareHolderRepository _shareHolderRepository;
+    private readonly IKeyLocationRepository _keyLocationRepository;
 
     public CarService(
         ICarRepository carRepository,
         IUserRepository userRepository,
         IKeyRepository keyRepository,
-        IShareHolderRepository shareHolderRepository)
+        IShareHolderRepository shareHolderRepository,
+        IKeyLocationRepository keyLocationRepository)
     {
         _carRepository = carRepository;
         _userRepository = userRepository;
         _keyRepository = keyRepository;
         _shareHolderRepository = shareHolderRepository;
+        _keyLocationRepository = keyLocationRepository;
     }
 
     public async Task<CarDto> CreateCar(CarDto carDto, long userId)
@@ -116,5 +119,38 @@ public class CarService : ICarService
     public Task<CarDto> UpdateCar(long carId, long userId, CarDto dto)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<List<KeyLocationDto>> GetKeyTransferHistory(long carId, long userId)
+    {
+                var car = await _carRepository.GetById(carId);
+        if (car == null)
+        {
+            throw new NotFoundException("Car not found!");
+        }
+
+        var existingEntry = await _shareHolderRepository.GetExistingEntry(carId, userId);
+        if (existingEntry == null)
+        {
+            throw new InsufficientPermissionException("User does not have access to the car");
+        }
+
+        var history = await _keyLocationRepository.GetHistory(carId);
+        var historyDto = new List<KeyLocationDto>();
+        foreach (var item in history)
+        {
+            var dto = new KeyLocationDto
+            {
+                Key = KeyAdapter.ToKeyDto(item.Key),
+                Member = UserAdapter.ToDto(item.Member),
+                PreviousMember = UserAdapter.ToDto(item.PreviousMember),
+                HandoverType = item.HandoverType == KeyHandoverType.Claim ? "Claim" : "Transfer",
+                Created = item.Created
+            };
+
+            historyDto.Add(dto);
+        }
+
+        return historyDto;
     }
 }

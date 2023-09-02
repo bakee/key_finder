@@ -9,4 +9,5 @@ public interface ICarService
     Task<List<CarDto>> GetCarSummary(long userId);
     Task<CarDetailDto> GetCarDetail(long carId, long userId);
     Task<CarDto> UpdateCar(long carId, long userId, CarDto dto);
+    Task<List<KeyLocationDto>> GetKeyTransferHistory(long carId, long userId);
 }

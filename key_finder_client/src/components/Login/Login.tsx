@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { login } from "../../api/user";
-import { setToken } from "../../utils/storage";
+import { setUser } from "../../utils/storage";
 import { useNavigate } from "react-router-dom";
 
 interface LoginProps {}
@@ -15,7 +15,7 @@ const Login: FC<LoginProps> = () => {
     try {
       let response = await login(email, password);
       console.log(response);
-      setToken(response.token!);
+      setUser(response);
       navigate("/");
     } catch (error: any) {
       console.log(error);

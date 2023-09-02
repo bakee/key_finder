@@ -26,3 +26,27 @@ export const claimKey = async (keyId: number) => {
   }
   return [];
 };
+
+export const transferKey = async (keyId: number, memberId: number) => {
+  const apiPath = makeUrl("/keys/transfer");
+  try {
+    const token = getToken();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const body: KeyDto = {
+      keyId: keyId,
+      memberId: memberId,
+      name: "",
+    };
+
+    let response = await axios.put(apiPath, body, config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+  return [];
+};

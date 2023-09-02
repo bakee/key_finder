@@ -7,6 +7,7 @@ import Member from "../Member/Member";
 import { getUserByEmail } from "../../api/user";
 import { addShareHolder } from "../../api/shareHolders";
 import { showAlert } from "../../utils/alert";
+import { getUser } from "../../utils/storage";
 
 interface CarDetailProps {}
 
@@ -16,6 +17,7 @@ const CarDetail: FC<CarDetailProps> = () => {
   const [users, setUsers] = useState<UserDto[]>([]);
   const location = useLocation();
   const car: CarDto = location.state;
+  const currentUser = getUser();
 
   const addMember = async () => {
     const userEmail = prompt("Member email: ");
@@ -45,7 +47,9 @@ const CarDetail: FC<CarDetailProps> = () => {
     let allKeys: KeyDto[] = [];
     let allUsers: UserDto[] = [];
     data.members.forEach((m) => {
-      allUsers.push(m.member);
+      if (m.member.id !== currentUser?.id) {
+        allUsers.push(m.member);
+      }
       m.keys.forEach((k) => allKeys.push(k));
     });
     setKeys(allKeys);

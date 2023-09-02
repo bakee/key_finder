@@ -1,10 +1,13 @@
 import React, { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { getUser } from "../../utils/storage";
 
 interface NavBarProps {}
 
 const NavBar: FC<NavBarProps> = () => {
   const location = useLocation();
+  const currentUser = getUser();
+
   return (
     <>
       {location.pathname !== "/login" && (
@@ -13,6 +16,7 @@ const NavBar: FC<NavBarProps> = () => {
             <Link className="navbar-brand" to="/">
               Key Finder
             </Link>
+            {currentUser?.name}
             <button
               className="navbar-toggler"
               type="button"

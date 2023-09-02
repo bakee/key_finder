@@ -1,13 +1,27 @@
-const tokenKey: string = "jwtToken";
+import { UserDto } from "../api/dto";
+
+const currentUserKey: string = "currentUser";
 
 export const getToken = (): string | null => {
-  return localStorage.getItem(tokenKey);
+  const user = getUser();
+  if (user) {
+    return user.token!;
+  }
+  return null;
 };
 
-export const setToken = (token: string) => {
-  localStorage.setItem(tokenKey, token);
+export const getUser = (): UserDto | null => {
+  const userJson = localStorage.getItem(currentUserKey);
+  if (userJson !== null) {
+    return JSON.parse(userJson);
+  }
+  return null;
+};
+
+export const setUser = (user: UserDto) => {
+  localStorage.setItem(currentUserKey, JSON.stringify(user));
 };
 
 export const removeToken = () => {
-  localStorage.removeItem(tokenKey);
+  localStorage.removeItem(currentUserKey);
 };

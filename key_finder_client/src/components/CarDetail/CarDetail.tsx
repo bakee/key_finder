@@ -8,6 +8,7 @@ import { getUserByEmail } from "../../api/user";
 import { addShareHolder } from "../../api/shareHolders";
 import { showAlert } from "../../utils/alert";
 import { getUser } from "../../utils/storage";
+import KeyLocationHistory from "../KeyLocationHistory/KeyLocationHistory";
 
 interface CarDetailProps {}
 
@@ -80,6 +81,7 @@ const CarDetail: FC<CarDetailProps> = () => {
         carDetail.members.map((m) => (
           <Member member={m} reload={getCarDetails} users={users} />
         ))}
+      <KeyLocationHistory car={car} />
     </>
   );
 };

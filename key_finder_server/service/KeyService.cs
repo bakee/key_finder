@@ -31,7 +31,7 @@ public class KeyService : IKeyService
             return;
         }
 
-        await TransferKey(key, userId);
+        await TransferKey(key, userId, KeyHandoverType.Claim);
     }
 
     public async Task TransferKey(long keyId, long userId, long newKeyHolderId)
@@ -48,7 +48,7 @@ public class KeyService : IKeyService
             return;
         }
 
-        await TransferKey(key, newKeyHolderId);
+        await TransferKey(key, newKeyHolderId, KeyHandoverType.Transfer);
     }
     
     private async Task<Key> GetKey(long keyId)
@@ -62,7 +62,7 @@ public class KeyService : IKeyService
         return key;
     }
 
-    private async Task TransferKey(Key key, long newKeyHolderId)
+    private async Task TransferKey(Key key, long newKeyHolderId, KeyHandoverType handoverType)
     {
         var members = await _shareHolderRepository.GetAllMembersForCar(key.Car.Id);
         var member = members.FirstOrDefault(m => m.Id == newKeyHolderId);
@@ -78,7 +78,7 @@ public class KeyService : IKeyService
         var keyLocation = new KeyLocation
         {
             Key = key,
-            HandoverType = KeyHandoverType.Claim,
+            HandoverType = handoverType,
             PreviousMember = previousMember,
             Member = member
         };

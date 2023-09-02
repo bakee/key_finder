@@ -35,3 +35,11 @@ export interface ShareHolderDto {
   carId: number;
   memberId: number;
 }
+
+export interface KeyLocationDto {
+  key: KeyDto;
+  member: UserDto;
+  previousMember?: UserDto;
+  handoverType: string;
+  created: Date;
+}

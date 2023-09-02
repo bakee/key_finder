@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { CarDetailDto, CarDto, KeyDto } from "../../api/dto";
+import { CarDetailDto, CarDto, KeyDto, UserDto } from "../../api/dto";
 import { getCarDetail } from "../../api/cars";
 import Car from "../Car/Car";
 import Member from "../Member/Member";
@@ -13,6 +13,7 @@ interface CarDetailProps {}
 const CarDetail: FC<CarDetailProps> = () => {
   const [carDetail, setCarDetail] = useState<CarDetailDto>();
   const [keys, setKeys] = useState<KeyDto[]>([]);
+  const [users, setUsers] = useState<UserDto[]>([]);
   const location = useLocation();
   const car: CarDto = location.state;
 
@@ -42,10 +43,14 @@ const CarDetail: FC<CarDetailProps> = () => {
     const data = await getCarDetail(car.id!);
     data.members.sort((a, b) => b.keys.length - a.keys.length);
     let allKeys: KeyDto[] = [];
+    let allUsers: UserDto[] = [];
     data.members.forEach((m) => {
+      allUsers.push(m.member);
       m.keys.forEach((k) => allKeys.push(k));
     });
     setKeys(allKeys);
+    allUsers.sort((u1, u2) => u1.name.localeCompare(u2.name));
+    setUsers(allUsers);
     setCarDetail(data);
   };
 
@@ -69,7 +74,7 @@ const CarDetail: FC<CarDetailProps> = () => {
       </div>
       {carDetail &&
         carDetail.members.map((m) => (
-          <Member member={m} reload={getCarDetails} />
+          <Member member={m} reload={getCarDetails} users={users} />
         ))}
     </>
   );

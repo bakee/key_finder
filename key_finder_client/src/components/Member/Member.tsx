@@ -1,10 +1,11 @@
 import React, { FC } from "react";
-import { MemberDto } from "../../api/dto";
+import { MemberDto, UserDto } from "../../api/dto";
 import Key from "../Key/Key";
 
 interface MemberProps {
   member: MemberDto;
   reload: () => void;
+  users: UserDto[];
 }
 
 const Member: FC<MemberProps> = (data) => {
@@ -24,7 +25,7 @@ const Member: FC<MemberProps> = (data) => {
           <div className="mt-3">
             <h5>Keys</h5>
             {keys.map((k) => (
-              <Key data={k} reload={data.reload}/>
+              <Key data={k} reload={data.reload} users={data.users}/>
             ))}
           </div>
         )}

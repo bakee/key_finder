@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0
 
 RUN dotnet tool install --global dotnet-ef
-RUN echo "export PATH=$PATH:/root/.dotnet/tools" >> /root/.bashrc
+ENV PATH "$PATH:/root/.dotnet/tools"
 
 WORKDIR /app
 

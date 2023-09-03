@@ -3,10 +3,27 @@ version: '3.9'
 services:
   app:
     build: .
-    command: pnpm run debug
-    ports:
-      - "3000:3000"
-      - "9229:9229"
     volumes:
       - .:/app
+    restart: "no"
+  
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - .:/app
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.key-finder.rule=Host(`key-finder.run-on.app`)
+      - traefik.http.routers.key-finder.tls=true
+      - traefik.http.routers.key-finder.tls.certresolver=le
+    networks:
+      - default
+      - traefik-proxy
+    ports:
+      - "3000:80"
     restart: always
+
+networks:
+  traefik-proxy:
+    external: true

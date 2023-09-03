@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    command: dotnet run --project api --urls "http://0.0.0.0:80"
+    volumes:
+      - .:/app
+    env_file: .env
+    environment:
+      - WAIT_HOSTS=db
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.key-finder-api.rule=Host(`api.key-finder.run-on.app`)
+      - traefik.http.routers.key-finder-api.tls=true
+      - traefik.http.routers.key-finder-api.tls.certresolver=le
+    networks:
+      - default
+      - traefik-proxy
+    depends_on:
+      - db
+      - pgadmin
+    restart: always
+  
+  db:
+    image: postgres:15-alpine
+    command: postgres -c 'max_connections=1000'
+    env_file: .env
+    volumes:
+      - db:/var/lib/postgresql/data
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    env_file: .env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.key-finder-pgadmin.rule=Host(`pgadmin.key-finder.run-on.app`)
+      - traefik.http.routers.key-finder-pgadmin.tls=true
+      - traefik.http.routers.key-finder-pgadmin.tls.certresolver=le
+    networks:
+      - default
+      - traefik-proxy
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  db:
+  pgadmin:
+
+networks:
+  traefik-proxy:
+    external: true

@@ -9,5 +9,5 @@ public abstract class EntityBase
 
     public DateTime Created { get; set; } = DateTime.UtcNow;
     public DateTime Updated { get; set; } = DateTime.UtcNow;
-    public bool IsDeleted { get; set; }
+    // public bool IsDeleted { get; set; }
 }

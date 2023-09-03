@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  app:
+    command: dotnet watch --project api run --urls "http://0.0.0.0:80"
+    ports:
+      - "8000:80"
+
+  pgadmin:
+    ports:
+      - "5050:80"

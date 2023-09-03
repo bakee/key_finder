@@ -14,10 +14,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// builder.Services.AddDbContext<AppDbContext>(options =>
+// {
+//     options.UseSqlite("Data Source=sqlite.db;Mode=ReadWrite;");
+// });
 builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlite("Data Source=sqlite.db;Mode=ReadWrite;");
-});
+    options.UseNpgsql("Host=db;Port=5432;Database=postgres;Username=postgres;Password=postgres;"));
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin",
@@ -55,7 +57,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

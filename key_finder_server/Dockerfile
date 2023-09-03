@@ -8,4 +8,4 @@ RUN useradd -u 1000 -ms /bin/bash -g app app
 USER app
 
 RUN dotnet tool install --global dotnet-ef
-ENV PATH "$PATH:/root/.dotnet/tools"
+ENV PATH "$PATH://home/app/.dotnet/tools"

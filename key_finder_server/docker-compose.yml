@@ -9,6 +9,8 @@ services:
     env_file: .env
     environment:
       - WAIT_HOSTS=db
+    expose:
+      - 80
     labels:
       - traefik.enable=true
       - traefik.http.routers.key-finder-api.rule=Host(`api.key-finder.run-on.app`)

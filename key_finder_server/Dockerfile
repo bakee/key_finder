@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0
 
 RUN dotnet tool install --global dotnet-ef
-RUN export PATH="$PATH:/root/.dotnet/tools"
+RUN echo export PATH="$PATH:/root/.dotnet/tools" >> /etc/profile
 
 WORKDIR /app
 

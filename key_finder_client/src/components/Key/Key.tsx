@@ -28,7 +28,7 @@ const Key: FC<KeyProps> = (data) => {
     try {
       await claimKey(data.data.keyId);
       data.reload();
-      showAlert("You have successfully claimed the key!");
+      //showAlert("You have successfully claimed the key!");
     } catch (error: any) {
       showAlert(error);
     }
@@ -38,7 +38,7 @@ const Key: FC<KeyProps> = (data) => {
     try {
       await transferKey(data.data.keyId, userId);
       data.reload();
-      showAlert("You have successfully transferred the key!");
+      //showAlert("You have successfully transferred the key!");
     } catch (error: any) {
       showAlert(error);
     }

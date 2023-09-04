@@ -19,7 +19,6 @@ export const claimKey = async (keyId: number) => {
     };
 
     let response = await axios.put(apiPath, body, config);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

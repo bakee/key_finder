@@ -9,9 +9,11 @@ import {
   TableColumnType,
   TableHeader,
 } from "react-bs-datatable";
+import { format, parse, parseJSON } from "date-fns";
 
 interface KeyLocationHistoryProps {
   car: CarDto;
+  reload: boolean;
 }
 
 interface KeyLocationTable {
@@ -25,37 +27,37 @@ interface KeyLocationTable {
 const KeyLocationHistory: FC<KeyLocationHistoryProps> = (data) => {
   const [keyLocations, setKeyLocations] = useState<KeyLocationTable[]>([]);
 
-  useEffect(() => {
-    const getLocations = async () => {
-      const keyLocalions = await getKeyLocationHistory(data.car.id!);
-      setKeyLocations(
-        keyLocalions.map(
-          (kl) =>
-            ({
-              key: kl.key.name,
-              handoverType: kl.handoverType,
-              previousMember: kl.previousMember?.name,
-              member: kl.member?.name,
-              created: kl.created.toString(),
-            } as KeyLocationTable)
-        )
-      );
-    };
+  const getLocations = async () => {
+    const keyLocalions = await getKeyLocationHistory(data.car.id!);
+    setKeyLocations(
+      keyLocalions.map(
+        (kl) =>
+          ({
+            key: kl.key.name,
+            handoverType: kl.handoverType,
+            previousMember: kl.previousMember?.name,
+            member: kl.member?.name,
+            created: format(parseJSON(kl.created), "M/d/yyyy h:mm:ss aaa"),
+          } as KeyLocationTable)
+      )
+    );
+  };
 
+  useEffect(() => {
     getLocations();
-  }, []);
+  }, [data.reload]);
 
   const headers: TableColumnType<KeyLocationTable>[] = [
-    { title: "Key", prop: "key" },
-    { title: "Type", prop: "handoverType" },
-    { title: "Previous User", prop: "previousMember" },
-    { title: "User", prop: "member" },
     { title: "Date", prop: "created" },
+    { title: "Key", prop: "key" },
+    { title: "Member", prop: "member" },
+    { title: "Previous Member", prop: "previousMember" },
+    { title: "Transfer method", prop: "handoverType" },
   ];
 
   return (
     <div>
-      <h1>Keys Location History</h1>
+      <h4>Keys Location History</h4>
       <DatatableWrapper body={keyLocations} headers={headers}>
         <Table>
           <TableHeader />

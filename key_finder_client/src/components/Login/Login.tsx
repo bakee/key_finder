@@ -11,10 +11,8 @@ const Login: FC<LoginProps> = () => {
   const navigate = useNavigate();
 
   const handleRegistration = async () => {
-    console.log("Login data:", { email, password });
     try {
       let response = await login(email, password);
-      console.log(response);
       setUser(response);
       navigate("/");
     } catch (error: any) {

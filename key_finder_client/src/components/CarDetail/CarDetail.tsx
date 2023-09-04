@@ -16,6 +16,8 @@ const CarDetail: FC<CarDetailProps> = () => {
   const [carDetail, setCarDetail] = useState<CarDetailDto>();
   const [keys, setKeys] = useState<KeyDto[]>([]);
   const [users, setUsers] = useState<UserDto[]>([]);
+  const [reloadLocations, setReloadLocations] = useState(false);
+
   const location = useLocation();
   const car: CarDto = location.state;
   const currentUser = getUser();
@@ -41,6 +43,11 @@ const CarDetail: FC<CarDetailProps> = () => {
       showAlert(error);
     }
   };
+
+  const reload = async() => {
+    await getCarDetails();
+    setReloadLocations(!reloadLocations);
+  }
 
   const getCarDetails = async () => {
     const data = await getCarDetail(car.id!);
@@ -71,17 +78,23 @@ const CarDetail: FC<CarDetailProps> = () => {
       ) : (
         <Car car={carDetail!.car} showDetails={false} />
       )}
-      <h4>Members</h4>
-      <div className="mb-2">
-        <button className="btn btn-primary" onClick={addMember}>
-          Add Member
-        </button>
+      <div className="row">
+        <div className="col-lg-3">
+          <h4>Members</h4>
+          <div className="mb-2">
+            <button className="btn btn-primary" onClick={addMember}>
+              Add Member
+            </button>
+          </div>
+          {carDetail &&
+            carDetail.members.map((m) => (
+              <Member key={m.member.id} member={m} reload={getCarDetails} users={users} />
+            ))}
+        </div>
+        <div className="col-lg-9">
+          <KeyLocationHistory car={car} reload={reloadLocations} />
+        </div>
       </div>
-      {carDetail &&
-        carDetail.members.map((m) => (
-          <Member member={m} reload={getCarDetails} users={users} />
-        ))}
-      <KeyLocationHistory car={car} />
     </>
   );
 };

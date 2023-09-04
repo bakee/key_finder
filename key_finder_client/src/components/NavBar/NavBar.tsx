@@ -31,26 +31,6 @@ const NavBar: FC<NavBarProps> = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <Link className="nav-link" to="/">
-                    Dashboard
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/register">
-                    Register
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/create-car">
-                    Create Car
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/add-member">
-                    Add Member
-                  </Link>
-                </li>
-                <li className="nav-item">
                   <Link className="nav-link" to="/logout">
                     Logout
                   </Link>

@@ -18,8 +18,9 @@ export const register = async (
   };
   try {
     return await axios.post(apiPath, newUser);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
+    throw error.response.data;
   }
 };
 

@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { login } from "../../api/user";
 import { setUser } from "../../utils/storage";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface LoginProps {}
 
@@ -47,6 +47,9 @@ const Login: FC<LoginProps> = () => {
       <button className="btn btn-primary" onClick={handleRegistration}>
         Login
       </button>
+      <div>
+        To create an account, please <Link to="/register"> register </Link>
+      </div>
     </>
   );
 };

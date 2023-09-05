@@ -1,5 +1,6 @@
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const showAlert = (message: string) => {
-  setTimeout(() => {
-    alert(message);
-  }, 50);
+  toast(message, {autoClose: 2000});
 };

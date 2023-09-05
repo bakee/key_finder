@@ -16,10 +16,12 @@ import CreateCar from "./components/CreateCar/CreateCar";
 import CarDetail from "./components/CarDetail/CarDetail";
 import Logout from "./components/Logout/Logout";
 import NavBar from "./components/NavBar/NavBar";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <div className="container">
+      <ToastContainer />
       <BrowserRouter>
         <NavBar />
         <Routes>

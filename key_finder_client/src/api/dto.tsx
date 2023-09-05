@@ -41,5 +41,5 @@ export interface KeyLocationDto {
   member: UserDto;
   previousMember?: UserDto;
   handoverType: string;
-  created: Date;
+  created: string;
 }

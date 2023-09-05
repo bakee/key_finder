@@ -25,7 +25,7 @@ const Member: FC<MemberProps> = (data) => {
           <div className="mt-3">
             <h5>Keys</h5>
             {keys.map((k) => (
-              <Key data={k} reload={data.reload} users={data.users} member={data.member.member} />
+              <Key key={k.keyId} data={k} reload={data.reload} users={data.users} member={data.member.member} />
             ))}
           </div>
         )}

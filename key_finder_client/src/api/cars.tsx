@@ -13,7 +13,6 @@ export const getCars = async (): Promise<CarDto[]> => {
       },
     };
     let response = await axios.get(apiPath, config);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -31,7 +30,6 @@ export const getCarDetail = async (carId: number): Promise<CarDetailDto> => {
       },
     };
     let response = await axios.get(apiPath, config);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -61,7 +59,6 @@ export const createCar = async (
       licensePlate: licensePlate,
     };
     let response = await axios.post(apiPath, body, config);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -79,7 +76,6 @@ export const getKeyLocationHistory = async (carId: number): Promise<KeyLocationD
       },
     };
     let response = await axios.get(apiPath, config);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

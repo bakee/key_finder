@@ -3,7 +3,7 @@ import Car from "../Car/Car";
 import { CarDto } from "../../api/dto";
 import { getCars } from "../../api/cars";
 import { getToken } from "../../utils/storage";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface DashboardProps {}
 
@@ -27,6 +27,11 @@ const Dashboard: FC<DashboardProps> = () => {
   return (
     <>
       <h1>Cars</h1>
+      <div className="mb-2">
+        <Link className="btn btn-warning" to="create-car">
+          Create Car
+        </Link>
+      </div>
       {cars.map((car) => (
         <Car key={car.id} car={car} showDetails={true} />
       ))}

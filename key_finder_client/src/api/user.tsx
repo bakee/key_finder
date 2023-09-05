@@ -18,8 +18,9 @@ export const register = async (
   };
   try {
     return await axios.post(apiPath, newUser);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
+    throw error.response.data;
   }
 };
 
@@ -37,7 +38,6 @@ export const login = async (
   };
   try {
     const response = await axios.post(apiPath, newUser);
-    console.log(response);
     return response.data;
   } catch (error: any) {
     console.log(error);

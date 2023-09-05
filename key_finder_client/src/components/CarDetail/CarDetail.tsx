@@ -37,17 +37,17 @@ const CarDetail: FC<CarDetailProps> = () => {
 
     try {
       await addShareHolder(car.id!, user.id!);
-      await getCarDetails();
+      await reload();
       showAlert("Member added successfully!");
     } catch (error: any) {
       showAlert(error);
     }
   };
 
-  const reload = async() => {
+  const reload = async () => {
     await getCarDetails();
     setReloadLocations(!reloadLocations);
-  }
+  };
 
   const getCarDetails = async () => {
     const data = await getCarDetail(car.id!);
@@ -67,7 +67,7 @@ const CarDetail: FC<CarDetailProps> = () => {
   };
 
   useEffect(() => {
-    getCarDetails();
+    reload();
   }, []);
 
   return (
@@ -88,7 +88,12 @@ const CarDetail: FC<CarDetailProps> = () => {
           </div>
           {carDetail &&
             carDetail.members.map((m) => (
-              <Member key={m.member.id} member={m} reload={getCarDetails} users={users} />
+              <Member
+                key={m.member.id}
+                member={m}
+                reload={reload}
+                users={users}
+              />
             ))}
         </div>
         <div className="col-lg-9">

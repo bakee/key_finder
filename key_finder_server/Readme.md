@@ -30,6 +30,11 @@ dotnet run
 cp .env.example .env
 ```
 
+- Create network
+```bash
+docker network create traefik-proxy
+```
+
 - Update database
 
 ```bash

@@ -18,8 +18,9 @@ builder.Services.AddSwaggerGen();
 // {
 //     options.UseSqlite("Data Source=sqlite.db;Mode=ReadWrite;");
 // });
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql("Host=db;Port=5432;Database=postgres;Username=postgres;Password=postgres;"));
+    options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin",

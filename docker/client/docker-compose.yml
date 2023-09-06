@@ -1,17 +1,17 @@
-version: '3.9'
+version: "3.9"
 
 services:
   app:
     build: .
     volumes:
-      - .:/app
+      - ../../key_finder_client:/app
     restart: "no"
-  
+
   nginx:
     image: nginx:stable-alpine
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - .:/app
+      - ../../key_finder_client:/app
     labels:
       - traefik.enable=true
       - traefik.http.routers.key-finder.rule=Host(`key-finder.run-on.app`)
@@ -20,8 +20,6 @@ services:
     networks:
       - default
       - traefik-proxy
-    ports:
-      - "3000:80"
     restart: always
 
 networks:

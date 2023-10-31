@@ -2,6 +2,8 @@ import { FC, useState } from "react";
 import { login } from "../../api/user";
 import { setUser } from "../../utils/storage";
 import { Link, useNavigate } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
+import { showAlert } from "../../utils/alert";
 
 interface LoginProps {}
 
@@ -10,44 +12,55 @@ const Login: FC<LoginProps> = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleRegistration = async () => {
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
     try {
       let response = await login(email, password);
       setUser(response);
+      showAlert("Login successful!");
       navigate("/");
     } catch (error: any) {
       console.log(error);
-      alert("Login failed! " + error.message);
+      showAlert("Login failed! " + error.message);
     }
   };
 
   return (
     <>
-      <h1>Login Form</h1>
-      <div className="form-group">
-        <label>Email</label>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <label>Password</label>
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button className="btn btn-primary" onClick={handleRegistration}>
-        Login
-      </button>
-      <div>
-        To create an account, please <Link to="/register"> register </Link>
-      </div>
+      <h3 className="text-center">Login Form</h3>
+      <hr />
+      <Form onSubmit={handleLogin}>
+        <Form.Group className="mb-3">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Login
+        </Button>
+        <Form.Group>
+          <Form.Text className="text-muted">
+            No account yet? Please <Link to="/register"> register </Link>.
+          </Form.Text>
+        </Form.Group>
+      </Form>
     </>
   );
 };

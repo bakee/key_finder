@@ -18,6 +18,7 @@ public class KeyLocationRepository : RepositoryBase<KeyLocation>, IKeyLocationRe
         .Include(kl => kl.Member)
         .Include(kl => kl.PreviousMember)
         .OrderByDescending(kl => kl.Created)
+        .Take(10)
         .ToListAsync();
     }
 }

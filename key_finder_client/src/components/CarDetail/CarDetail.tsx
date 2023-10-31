@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CarDetailDto, CarDto, KeyDto, UserDto } from "../../api/dto";
 import { getCarDetail } from "../../api/cars";

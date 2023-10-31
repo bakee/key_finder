@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
-import { getToken } from "../../utils/storage";
-import { CarDto, KeyLocationDto } from "../../api/dto";
+import { FC, useEffect, useState } from "react";
+import { CarDto } from "../../api/dto";
 import { getKeyLocationHistory } from "../../api/cars";
 import { Table } from "react-bootstrap";
 import {
@@ -9,7 +8,7 @@ import {
   TableColumnType,
   TableHeader,
 } from "react-bs-datatable";
-import { format, parse, parseJSON } from "date-fns";
+import { format, parseJSON } from "date-fns";
 
 interface KeyLocationHistoryProps {
   car: CarDto;

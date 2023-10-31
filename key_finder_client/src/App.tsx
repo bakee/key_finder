@@ -1,14 +1,8 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.bundle";
 
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Router,
-  Link,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Registration from "./components/Registration/Registration";
 import Login from "./components/Login/Login";

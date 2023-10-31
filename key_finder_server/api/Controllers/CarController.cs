@@ -1,7 +1,6 @@
 using KeyFinder.Core.Dto;
 using KeyFinder.Core.Service;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KeyFinder.Api.Controller;

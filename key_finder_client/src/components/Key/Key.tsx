@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { KeyDto, UserDto } from "../../api/dto";
 import { claimKey, transferKey } from "../../api/keys";
 import { showAlert } from "../../utils/alert";

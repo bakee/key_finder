@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using KeyFinder.Repository;
@@ -19,8 +18,11 @@ builder.Services.AddSwaggerGen();
 //     options.UseSqlite("Data Source=sqlite.db;Mode=ReadWrite;");
 // });
 
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
+    options.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=postgres;"));
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin",
@@ -39,8 +41,6 @@ builder.Services.AddAuthentication()
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["JwtSettings:Issuer"], // Replace with your issuer
             ValidAudience = builder.Configuration["JwtSettings:Audience"], // Replace with your audience

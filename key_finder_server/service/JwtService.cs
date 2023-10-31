@@ -24,10 +24,10 @@ public class JwtService : IJwtService
 
         var claims = new[]
         {
-                new Claim("UserId", userId),
-                new Claim("Username", username),
-                new Claim("Email", email)
-            };
+            new Claim("UserId", userId),
+            new Claim("Username", username),
+            new Claim("Email", email)
+        };
 
         var token = new JwtSecurityToken(
             issuer: issuer,

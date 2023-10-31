@@ -1,5 +1,4 @@
 using KeyFinder.Core.Dto;
-using KeyFinder.Core.Entity;
 
 namespace KeyFinder.Core.Service;
 

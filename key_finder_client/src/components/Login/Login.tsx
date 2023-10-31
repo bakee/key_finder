@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { login } from "../../api/user";
 import { setUser } from "../../utils/storage";
 import { Link, useNavigate } from "react-router-dom";

@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { FormControlProps } from "react-bootstrap/FormControl";
 import { UserDto } from "../../api/dto";
 
 interface UserSelectionDialogProps {

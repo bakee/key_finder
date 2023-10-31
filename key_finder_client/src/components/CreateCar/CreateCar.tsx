@@ -1,5 +1,6 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { createCar } from "../../api/cars";
+import { useNavigate } from "react-router-dom";
 
 interface CreateCarProps {}
 
@@ -8,10 +9,12 @@ const CreateCar: FC<CreateCarProps> = () => {
   const [model, setModel] = useState("");
   const [year, setYear] = useState(0);
   const [licensePlate, setLincensePlate] = useState("");
+  const navigate = useNavigate();
 
   const handleCreateCar = async () => {
     let response = await createCar(make, model, year, licensePlate);
     console.log(response);
+    navigate("/");
   };
 
   return (

@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { register } from "../../api/user";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface RegistrationProps {}
 
@@ -47,6 +47,10 @@ const Registration: FC<RegistrationProps> = () => {
       <button className="btn btn-primary" onClick={handleRegistration}>
         Register
       </button>
+      <br />
+      <p>
+        If you already have an account, please <Link to="/login">login</Link>.
+      </p>
     </>
   );
 };

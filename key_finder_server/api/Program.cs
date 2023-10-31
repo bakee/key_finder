@@ -5,23 +5,18 @@ using KeyFinder.Api.ExceptionHandling;
 using KeyFinder.Api;
 using Microsoft.IdentityModel.Tokens;
 
+DotNetEnv.Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// builder.Services.AddDbContext<AppDbContext>(options =>
-// {
-//     options.UseSqlite("Data Source=sqlite.db;Mode=ReadWrite;");
-// });
 
-// builder.Services.AddDbContext<AppDbContext>(options =>
-//     options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=postgres;"));
+    options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
 
 builder.Services.AddCors(options =>
 {

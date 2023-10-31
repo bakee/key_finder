@@ -37,6 +37,7 @@ const Registration: FC<RegistrationProps> = () => {
           <Form.Control
             type="text"
             placeholder="Enter name"
+            value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />

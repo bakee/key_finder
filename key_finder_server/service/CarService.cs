@@ -116,14 +116,32 @@ public class CarService : ICarService
         throw new NotImplementedException();
     }
 
-    public Task<CarDto> UpdateCar(long carId, long userId, CarDto dto)
+    public async Task<CarDto> UpdateCar(long carId, long userId, CarDto dto)
     {
-        throw new NotImplementedException();
+        var car = await _carRepository.GetById(carId);
+        if (car == null)
+        {
+            throw new NotFoundException("Car not found!");
+        }
+
+        if (car.Owner.Id != userId)
+        {
+            throw new InsufficientPermissionException("You are not the owner of the car!");
+        }
+
+        car.Make = dto.Make;
+        car.Model = dto.Model;
+        car.Year = dto.Year;
+        car.LicensePlate = dto.LicensePlate;
+
+        var updatedCar = await _carRepository.Update(car);
+
+        return CarAdapter.ToCarDto(updatedCar);
     }
 
     public async Task<List<KeyLocationDto>> GetKeyTransferHistory(long carId, long userId)
     {
-                var car = await _carRepository.GetById(carId);
+        var car = await _carRepository.GetById(carId);
         if (car == null)
         {
             throw new NotFoundException("Car not found!");

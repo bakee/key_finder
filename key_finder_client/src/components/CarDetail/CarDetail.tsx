@@ -76,7 +76,11 @@ const CarDetail: FC<CarDetailProps> = () => {
       {!carDetail ? (
         <div>Loading...</div>
       ) : (
-        <Car car={carDetail!.car} showDetails={false} />
+        <Car
+          car={carDetail!.car}
+          showDetails={false}
+          isOwner={carDetail.isOwner}
+        />
       )}
       <div className="row">
         <div className="col-lg-3">

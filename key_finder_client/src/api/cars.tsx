@@ -21,6 +21,23 @@ export const getCars = async (): Promise<CarDto[]> => {
 };
 
 export const getCarDetail = async (carId: number): Promise<CarDetailDto> => {
+  const apiPath = makeUrl("/cars/" + carId + "/details");
+  try {
+    const token = getToken();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    let response = await axios.get(apiPath, config);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getCar = async (carId: number): Promise<CarDto> => {
   const apiPath = makeUrl("/cars/" + carId);
   try {
     const token = getToken();
@@ -42,7 +59,7 @@ export const createCar = async (
   model: string,
   year: number,
   licensePlate: string
-): Promise<CarDto[]> => {
+): Promise<CarDto | undefined> => {
   const apiPath = makeUrl("/cars");
   try {
     const token = getToken();
@@ -63,10 +80,41 @@ export const createCar = async (
   } catch (error) {
     console.log(error);
   }
-  return [];
 };
 
-export const getKeyLocationHistory = async (carId: number): Promise<KeyLocationDto[]> => {
+export const updateCar = async (
+  carId: number,
+  make: string,
+  model: string,
+  year: number,
+  licensePlate: string
+): Promise<CarDto | undefined> => {
+  const apiPath = makeUrl(`/cars/${carId}`);
+  try {
+    const token = getToken();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const body: CarDto = {
+      id: carId,
+      make: make,
+      model: model,
+      year: year,
+      licensePlate: licensePlate,
+    };
+
+    let response = await axios.put(apiPath, body, config);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getKeyLocationHistory = async (
+  carId: number
+): Promise<KeyLocationDto[]> => {
   const apiPath = makeUrl(`/cars/${carId}/history`);
   try {
     const token = getToken();

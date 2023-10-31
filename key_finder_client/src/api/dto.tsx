@@ -29,6 +29,7 @@ export interface CarDetailDto {
   car: CarDto;
   members: MemberDto[];
   keys: KeyDto[];
+  isOwner: boolean;
 }
 
 export interface ShareHolderDto {

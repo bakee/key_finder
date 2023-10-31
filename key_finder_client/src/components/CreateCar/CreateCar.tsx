@@ -24,7 +24,7 @@ const CreateCar: FC<CreateCarProps> = () => {
     make: "",
     model: "",
     year: 0,
-    licensePlat: "",
+    licensePlate: "",
     actionText: "Create",
     onSubmit: handleCreateCar,
   };

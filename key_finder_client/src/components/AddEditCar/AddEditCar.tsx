@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 
@@ -7,7 +7,7 @@ export interface AddEditCarProps {
   make: string;
   model: string;
   year: number;
-  licensePlat: string;
+  licensePlate: string;
   actionText: string;
   onSubmit: any;
 }
@@ -16,13 +16,19 @@ const AddEditCar: FC<AddEditCarProps> = (props) => {
   const [make, setMake] = useState(props.make);
   const [model, setModel] = useState(props.model);
   const [year, setYear] = useState(props.year);
-  const [licensePlate, setLincensePlate] = useState(props.licensePlat);
-  const navigate = useNavigate();
+  const [licensePlate, setLincensePlate] = useState(props.licensePlate);
 
   const handleCreateCar = async (e: any) => {
     e.preventDefault();
     props.onSubmit(make, model, year, licensePlate);
   };
+
+  useEffect(() => {
+    setMake(props.make);
+    setModel(props.model);
+    setYear(props.year);
+    setLincensePlate(props.licensePlate);
+  }, [props]);
 
   return (
     <>

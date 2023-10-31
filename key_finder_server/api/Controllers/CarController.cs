@@ -26,6 +26,14 @@ public class CarController : BaseController
     }
 
     [HttpGet("{carId:long}")]
+    public async Task<ActionResult> GetCar(long carId)
+    {
+        var userId = GetUserId();
+        var carDetail = await _carService.GetCar(carId, userId);
+        return Ok(carDetail);
+    }
+
+    [HttpGet("{carId:long}/details")]
     public async Task<ActionResult> GetDetail(long carId)
     {
         var userId = GetUserId();

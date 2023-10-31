@@ -33,7 +33,7 @@ const Dashboard: FC<DashboardProps> = () => {
         </Link>
       </div>
       {cars.map((car) => (
-        <Car key={car.id} car={car} showDetails={true} />
+        <Car key={car.id} car={car} showDetails={true} isOwner={false} />
       ))}
     </>
   );

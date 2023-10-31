@@ -1,10 +1,12 @@
 import { FC } from "react";
 import { CarDto } from "../../api/dto";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 interface CarProps {
   car: CarDto;
   showDetails: boolean;
+  isOwner: boolean;
 }
 
 const Car: FC<CarProps> = (props) => {
@@ -23,6 +25,11 @@ const Car: FC<CarProps> = (props) => {
           <button onClick={gotoDetails} className="btn btn-primary">
             Details
           </button>
+        )}
+        {!props.showDetails && props.isOwner && (
+          <Link className="btn btn-warning" to={`/edit/${props.car.id}`}>
+            Edit
+          </Link>
         )}
       </div>
     </div>

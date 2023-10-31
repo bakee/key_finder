@@ -11,6 +11,7 @@ import CarDetail from "./components/CarDetail/CarDetail";
 import Logout from "./components/Logout/Logout";
 import NavBar from "./components/NavBar/NavBar";
 import { ToastContainer } from "react-toastify";
+import EditCar from "./components/EditCar/EditCar";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/create-car" element={<CreateCar />} />
           <Route path="/detail" element={<CarDetail />} />
+          <Route path="/edit/:carId" element={<EditCar />} />
           <Route path="/logout" element={<Logout />} />
         </Routes>
       </BrowserRouter>

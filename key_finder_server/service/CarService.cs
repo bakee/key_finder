@@ -51,6 +51,23 @@ public class CarService : ICarService
         return cars.Select(CarAdapter.ToCarDto).ToList();
     }
 
+    public async Task<CarDto> GetCar(long carId, long userId)
+    {
+        var car = await _carRepository.GetById(carId);
+        if (car == null)
+        {
+            throw new NotFoundException("Car not found!");
+        }
+
+        var existingEntry = await _shareHolderRepository.GetExistingEntry(carId, userId);
+        if (existingEntry == null)
+        {
+            throw new InsufficientPermissionException("User does not have access to the car");
+        }
+
+        return CarAdapter.ToCarDto(car);
+    }
+
     public async Task<CarDetailDto> GetCarDetail(long carId, long userId)
     {
         var car = await _carRepository.GetById(carId);
@@ -81,7 +98,8 @@ public class CarService : ICarService
         return new CarDetailDto
         {
             Car = CarAdapter.ToCarDto(car),
-            Members = members
+            Members = members,
+            isOwner = userId == car.Owner.Id
         };
     }
 

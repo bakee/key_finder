@@ -10,7 +10,7 @@ const NavBar: FC<NavBarProps> = () => {
 
   return (
     <>
-      {location.pathname !== "/login" && (
+      {location.pathname !== "/login" && location.pathname !== "/register" && (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container">
             <Link className="navbar-brand" to="/">

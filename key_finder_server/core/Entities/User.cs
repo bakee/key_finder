@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace KeyFinder.Core.Entity;
 
 public class User : EntityBase
